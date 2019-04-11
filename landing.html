@@ -1,0 +1,121 @@
+<!doctype HTML>
+<html>
+
+<head>
+	<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+</head>
+<style>
+.switch {
+position: relative;
+display: inline-block;
+width: 60px;
+height: 34px;
+}
+
+.switch input {
+opacity: 0;
+width: 0;
+height: 0;
+}
+
+.slider {
+position: absolute;
+cursor: pointer;
+top: 0;
+left: 0;
+right: 0;
+bottom: 0;
+background-color: #ccc;
+-webkit-transition: .4s;
+transition: .4s;
+}
+
+.slider:before {
+position: absolute;
+content: "";
+height: 26px;
+width: 26px;
+left: 4px;
+bottom: 4px;
+background-color: white;
+-webkit-transition: .4s;
+transition: .4s;
+}
+
+input:checked + .slider {
+background-color: #2196F3;
+}
+
+input:focus + .slider {
+box-shadow: 0 0 1px #2196F3;
+}
+
+input:checked + .slider:before {
+-webkit-transform: translateX(26px);
+-ms-transform: translateX(26px);
+transform: translateX(26px);
+}
+
+/* Rounded sliders */
+.slider.round {
+border-radius: 34px;
+}
+
+.slider.round:before {
+border-radius: 50%;
+}
+
+</style>
+
+<body>
+	<div class="jumbotron" style="background: mediumpurple; color:white">
+		<h1 class="display-3" style="text-align: center">Welcome to BeLoud!</h1>
+		<h1 class="display-4" style="text-align: center; font-size: 2em">Please Login To Access Site</h1>
+		<div class="container-fluid" style="text-align: center">
+			<form action="login.php" method="post" class="input-group mb-3" id="loginForm">
+				<div class="input-group-prepend">
+					<span class="input-group-text" id="basic-addon1">@</span>
+				</div>
+				<input type="text" class="form-control" placeholder="Username" aria-label="Username" name="userna" aria-describedby="basic-addon1" required>
+				<input type="password" class="form-control" placeholder="Password" aria-label="Username" name="passwo" aria-describedby="basic-addon1" required>
+				<button class="btn btn-secondary" type="submit" role="button">Login</button>
+			</form>
+			<form action="signuphandler.php" method="post" id="signUpForm" style="display: none">
+				<div class="input-group mb-3">
+					<div class="input-group-prepend">
+						<span class="input-group-text" id="basic-addon1">@</span>
+					</div>
+					<input type="text" size="3" title="Only allow alphanumeric and underscore" pattern="^[a-zA-Z0-9_]*$" maxlength="20" class="form-control" placeholder="Username" aria-label="Username" name="usern" aria-describedby="basic-addon1" required>
+					<input type="password" placeholder="Password" aria-label="First name" name="passw" class="form-control" required>
+					<input type="text" size="3" title="Totally Up to You!" class="form-control" placeholder="Email" aria-label="Email" aria-describedby="basic-addon1">
+					<button class="btn btn-secondary" type="submit" role="button">Sign Up</button>
+				</div>
+			</form>
+			<label class="switch">
+  				<input type="checkbox" id="flipSignUp" oninput="flip()">
+  				<span class="slider round"></span>
+			</label>
+		</div>
+	</div>
+	<div id="informationContainer" class="container-fluid">
+
+	</div>
+	<div id="teamContainer" class="container-fluid">
+
+	</div>
+	<footer>BeLoud All Rights Reserved 2019. Site Created by Sandbox Systems LLC</footer>
+</body>
+<script>
+	function flip(){
+		console.log("hi");
+		if(document.getElementById("flipSignUp").checked){
+			document.getElementById("loginForm").style.display = "none";
+			document.getElementById("signUpForm").style.display = "flex";
+		}else{
+			document.getElementById("loginForm").style.display = "flex";
+			document.getElementById("signUpForm").style.display = "none";
+		}
+	}
+</script>
+</html>
