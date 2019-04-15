@@ -4,13 +4,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="css/main.css">
 </head>
-<style>
-a:link { color: white; text-decoration: none}
-a:visited { color: white; text-decoration: none}
-a:hover { color: white; text-decoration: none}
-a:active { color: white; text-decoration: none}
-</style>
 <?php
 session_start();
 if($_SESSION["kyahaiuser"] == ""){
@@ -23,11 +18,9 @@ include 'credentials.php';
 ?>
 <body>
     <nav class="navbar navbar-light bg-light">
-        <a class="navbar-brand">
-            <?php
-                  echo "Welcome @" . $_SESSION["kyahaiuser"];
-            ?>
-        </a>
+        <?php
+              echo "<a class='navbar-brand' href='user.php?name=" . $_SESSION["kyahaiuser"] . "'>Welcome @" . $_SESSION["kyahaiuser"] . "</a>";
+        ?>
         <form class="form-inline">
             <?php
                 echo "<div class='btn-group' role='group' aria-label='Basic example'><button type='button' class='btn btn-secondary'><a href='home.php'><i class=
