@@ -2,8 +2,7 @@
 include 'credentials.php';
 session_start();
 
-// $blah = $_GET["user"];
-
+/*Prepared Statement*/
 $sql = "DELETE FROM followers WHERE followers.follower=" . $_SESSION["myID"];
 $result = $conn->query($sql);
 

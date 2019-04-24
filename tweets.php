@@ -25,6 +25,7 @@ include 'credentials.php';
             <?php
                 echo "<div class='btn-group' role='group' aria-label='Basic example'><button type='button' class='btn btn-secondary'><a href='home.php'><i class=
                 'fas fa-home'></i></a></button><button type='button' data-toggle='modal' data-target='#followingModal' class='btn btn-secondary'>";
+                /*Prepared Statement*/
                 $sql = "SELECT COUNT(followers.followee) FROM followers WHERE followers.followee!=" . $_SESSION["myID"];
                 $result = $conn->query($sql);
 
@@ -35,6 +36,7 @@ include 'credentials.php';
                 echo " Following</button>";
 
                 echo "<button type='button' class='btn btn-secondary' data-toggle='modal' data-target='#followerModal'>";
+                /*Prepared Statement*/
                 $sql = "SELECT COUNT(followers.followee) FROM followers WHERE followers.followee=" . $_SESSION["myID"];
                 $result = $conn->query($sql);
 
@@ -74,7 +76,7 @@ include 'credentials.php';
             <h1 class="display-3" style="text-align: center">
                 <?php
                     $stmt=$conn->prepare("SELECT tweets.content FROM tweets WHERE tweets.id = ?");
-                    $stmt->bind_param("s",$id);
+                    $stmt->bind_param("i",$id);
                     $stmt->execute();
                     $result = $stmt->get_result();
 
@@ -97,6 +99,7 @@ include 'credentials.php';
           <div class="modal-body">
               <div class="card-group">
               <?php
+              /*Prepared Statement*/
                   $sql = "SELECT users.id,users.username FROM users INNER JOIN followers ON followers.followee=users.id";
                   $result = $conn->query($sql);
                   while($row = $result->fetch_assoc()){
@@ -124,6 +127,7 @@ include 'credentials.php';
             <div class="modal-body">
                 <div class="card-group">
                 <?php
+                /*Prepared Statement*/
                   $sql = "SELECT users.id,users.username FROM users INNER JOIN followers ON followers.follower=users.id";
                     $result = $conn->query($sql);
                     while($row = $result->fetch_assoc()){
@@ -157,7 +161,7 @@ include 'credentials.php';
     <div class="card-columns">
     <?php
     $sql = $conn->prepare("SELECT users.username,replies.content,replies.timer,replies.id FROM replies INNER JOIN users ON replies.userid=users.id WHERE replies.tweetid=?");
-    $sql->bind_param("s",$id);
+    $sql->bind_param("i",$id);
     $sql->execute();
     $result = $sql->get_result();
 

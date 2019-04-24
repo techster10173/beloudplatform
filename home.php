@@ -24,6 +24,7 @@
       <div class='btn-group' role='group' aria-label='Basic example'>
     <?php
         echo "<button type='button' data-toggle='modal' data-target='#followingModal' class='btn btn-secondary'>";
+        /*Prepared Statement*/
         $sql = "SELECT COUNT(followers.follower) FROM followers WHERE followers.follower=" . $_SESSION["myID"];
         $result = $conn->query($sql);
 
@@ -34,6 +35,7 @@
         echo " Following</button>";
 
         echo "<button type='button' class='btn btn-secondary' data-toggle='modal' data-target='#followerModal'>";
+        /*Prepared Statement*/
         $sql = "SELECT COUNT(followers.followee) FROM followers WHERE followers.followee=" . $_SESSION["myID"];
         $result = $conn->query($sql);
 
@@ -81,6 +83,7 @@
       <div class="modal-body">
           <div class="card-deck" style="display: inline-flex">
           <?php
+            /*Prepared Statement*/
               $sql = "SELECT users.id,users.username FROM users INNER JOIN followers ON followers.followee=users.id WHERE users.id <> " . $_SESSION["myID"];
               $result = $conn->query($sql);
               while($row = $result->fetch_assoc()){
@@ -108,6 +111,7 @@
         <div class="modal-body">
             <div class="card-deck" style="display: inline-flex">
             <?php
+            /*Prepared Statement*/
               $sql = "SELECT users.id,users.username FROM users INNER JOIN followers ON followers.follower=users.id WHERE users.id <>" . $_SESSION["myID"];
                 $result = $conn->query($sql);
                 while($row = $result->fetch_assoc()){
@@ -131,8 +135,8 @@
     </div>
 <div class="card-columns" style="text-align: center">
 <?php
+/*Prepared Statement*/
 $sql = "SELECT tweets.id,users.username,tweets.content,tweets.timer FROM tweets INNER JOIN users ON tweets.userid=users.id INNER JOIN followers ON users.id=followers.followee WHERE users.id !=" . $_SESSION["myID"] . " ORDER BY tweets.timer DESC";
-// this is just a string
 
 $result = $conn->query($sql);
 date_default_timezone_set('UTC');
@@ -157,8 +161,8 @@ while($row = $result->fetch_assoc()){
 </div>
 <div class="card-columns" style="text-align: center">
 <?php
+/*Prepared Statement*/
 $sql = "SELECT tweets.id,users.username,tweets.content,tweets.timer FROM tweets INNER JOIN users ON tweets.userid=users.id ORDER BY tweets.timer DESC";
-// this is just a string
 
 $result = $conn->query($sql);
 date_default_timezone_set('UTC');

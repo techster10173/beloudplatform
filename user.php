@@ -32,6 +32,7 @@
 
           echo "<div class='btn-group' role='group' aria-label='Basic example'><button type='button' class='btn btn-secondary'><a href='home.php'><i class=
           'fas fa-home'></i></a></button><button type='button' class='btn btn-secondary'>";
+          /*Prepared Statement*/
           $sql = "SELECT COUNT(followers.followee) FROM followers WHERE followers.followee!=" . $temp;
           $result = $conn->query($sql);
 
@@ -42,6 +43,7 @@
           echo " Following</button>";
 
           echo "<button type='button' class='btn btn-secondary'>";
+          /*Prepared Statement*/
           $sql = "SELECT COUNT(followers.followee) FROM followers WHERE followers.followee=" . $temp;
           $result = $conn->query($sql);
 
@@ -51,6 +53,7 @@
 
           echo " Followers</button>";
 
+          /*Prepared Statement*/
           $sql = "SELECT COUNT(votes.userid) FROM votes WHERE votes.userid =" . $_SESSION["myID"];
           $result = $conn->query($sql);
 
@@ -65,6 +68,7 @@
   </form>
   <form action="follow.php" method="post">
       <?php
+      /*Prepared Statement*/
             $sql = "SELECT followers.id FROM followers WHERE followers.followee=" . $temp . " AND followers.follower =" . $_SESSION["myID"];
             $result = $conn->query($sql);
             if($_SESSION["kyahaiuser"] != $_GET["name"]){
