@@ -61,3 +61,9 @@ border-radius: 34px;
 .slider.round:before {
 border-radius: 50%;
 }
+table, th, td {
+//border: 1px solid black;
+border-collapse: collapse;
+}
+.success{ color: green;}
+.danger{ color: red;}

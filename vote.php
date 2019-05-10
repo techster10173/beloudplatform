@@ -1,18 +1,7 @@
 <?php
 session_start();
 
-$server = "localhost";
-$user = "root";
-$pass = "usbw";
-$db = "loginassignment";
-
-
-$conn = new mysqli($server, $user, $pass, $db);
-
-if($conn->connect_error)
-{
-    die("Connection Failed: " . $conn->connect_error);
-}
+include "credentials.php";
 
 $me = $_SESSION["myID"];
     $checkStmt = $conn->prepare("SELECT id FROM votes WHERE replyid = ? AND userid = ?");

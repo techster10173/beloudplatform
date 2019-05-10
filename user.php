@@ -30,40 +30,8 @@
               $temp = $row["id"];
           }
 
-          echo "<div class='btn-group' role='group' aria-label='Basic example'><button type='button' class='btn btn-secondary'><a href='home.php'><i class=
-          'fas fa-home'></i></a></button><button type='button' class='btn btn-secondary'>";
-          /*Prepared Statement*/
-          $sql = "SELECT COUNT(followers.followee) FROM followers WHERE followers.followee!=" . $temp;
-          $result = $conn->query($sql);
-
-          while($row = $result->fetch_array()){
-              echo $row[0];
-          }
-
-          echo " Following</button>";
-
-          echo "<button type='button' class='btn btn-secondary'>";
-          /*Prepared Statement*/
-          $sql = "SELECT COUNT(followers.followee) FROM followers WHERE followers.followee=" . $temp;
-          $result = $conn->query($sql);
-
-          while($row = $result->fetch_array()){
-              echo $row[0];
-          }
-
-          echo " Followers</button>";
-
-          /*Prepared Statement*/
-          $sql = "SELECT COUNT(votes.userid) FROM votes WHERE votes.userid =" . $_SESSION["myID"];
-          $result = $conn->query($sql);
-
-          echo "<button type='button' class='btn btn-secondary'>";
-          while($row = $result->fetch_array()){
-              echo $row[0];
-          }
-          echo " Up Votes</button>";
-
-          echo "</div>";
+          $id = $temp;
+          include "getFollowDetails.php";
           ?>
   </form>
   <form action="follow.php" method="post">
