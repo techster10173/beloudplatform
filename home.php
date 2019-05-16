@@ -16,7 +16,6 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="css/main.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-3-typeahead/4.0.2/bootstrap3-typeahead.min.js"></script>
 </head>
 <?php include "navbar.php" ?>
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -48,13 +47,15 @@
 <div class="card-columns" style="text-align: center">
 <?php
 /*Prepared Statement*/
-$sql = "SELECT tweets.id,users.username,tweets.content,tweets.timer FROM followers INNER JOIN tweets ON tweets.userid = followers.followee INNER JOIN users ON users.id = tweets.userid WHERE followers.follower = " . $_SESSION["myID"];
+$sql = $conn->prepare("SELECT tweets.id,users.username,tweets.content,tweets.timer FROM followers INNER JOIN tweets ON tweets.userid = followers.followee INNER JOIN users ON users.id = tweets.userid WHERE followers.follower = ? AND tweets.userid NOT IN (SELECT block.blocker FROM block WHERE block.blockee=?)");
+$sql->bind_param("ii",$_SESSION["myID"],$_SESSION["myID"]);
+$sql->execute();
+$result = $sql->get_result();
 
-$result = $conn->query($sql);
 date_default_timezone_set('UTC');
 while ($row = $result->fetch_assoc()) {
     $text = preg_replace('/(?<!\S)#([0-9a-zA-Z]+)/', '<a href="hashtag.php?tag=$1">#$1</a>', $row["content"]);
-    $text = preg_replace('/(?<!\S)@([0-9a-zA-Z]+)/', '<a href="user.php?name=$1">@$1</a>', $text);
+    // $text = preg_replace('/(?<!\S)@([0-9a-zA-Z]+)/', '<a href="user.php?name=$1">@$1</a>', $text);
     echo "<div class='card text-primary bg-light mb-5' style='max-width: 18rem;'>";
     echo "<div class='card-header'><a class='text-primary' href='user.php?name=" . $row["username"] . "'>" . "@" . $row["username"] . "</a></div>";
     echo "<div class='card-body'>";
@@ -74,13 +75,15 @@ while ($row = $result->fetch_assoc()) {
 <div class="card-columns" style="text-align: center">
 <?php
 /*Prepared Statement*/
-$sql = "SELECT tweets.id,users.username,tweets.content,tweets.timer FROM tweets INNER JOIN users ON tweets.userid=users.id ORDER BY tweets.timer DESC";
-
-$result = $conn->query($sql);
+$sql = $conn->prepare("SELECT tweets.id,users.username,tweets.content,tweets.timer FROM tweets INNER JOIN users ON tweets.userid=users.id WHERE tweets.userid NOT IN (SELECT block.blocker FROM block WHERE block.blockee=?)");
+$sql->bind_param("i",$_SESSION["myID"]);
+$sql->execute();
+$result = $sql->get_result();
+//ORDER BY tweets.timer
 date_default_timezone_set('UTC');
 while ($row = $result->fetch_assoc()) {
     $text = preg_replace('/(?<!\S)#([0-9a-zA-Z]+)/', '<a href="hashtag.php?tag=$1">#$1</a>', $row["content"]);
-    $text = preg_replace('/(?<!\S)@([0-9a-zA-Z]+)/', '<a href="user.php?name=$1">@$1</a>', $text);
+    // $text = preg_replace('/(?<!\S)@([0-9a-zA-Z]+)/', '<a href="user.php?name=$1">@$1</a>', $text);
     echo "<div class='card text-primary bg-light mb-5' style='max-width: 18rem;'>";
     echo "<div class='card-header'><a class='text-primary' href='user.php?name=" . $row["username"] . "'>" . "@" . $row["username"] . "</a></div>";
     echo "<div class='card-body'>";
@@ -93,30 +96,3 @@ while ($row = $result->fetch_assoc()) {
 ?>
 </div>
 </div>
-<script>
-    $(document).ready(function(){
-        $('#search').typeahead({
-            source:  function (query, process){
-              $.ajax({
-                  url: "search.php?query=" + query,
-                  data: "json",
-                  type: "GET",
-                  success: function(data){
-                      data = $.parseJSON(data);
-        	          return process(data);
-                  }
-              });
-          },
-      });
-  });
-  $("#search").keypress(function (e) {
-    if (e.which == 13) {
-        event.preventDefault();
-        if($("#search").val().charAt(0) == "@"){
-            window.location.replace("user.php?name=" + $("#search").val().substring(1));
-        }else{
-            window.location.replace("tweets.php?text=" + $("#search").val());
-        }
-    }
-});
-    </script>

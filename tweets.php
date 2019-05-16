@@ -36,7 +36,7 @@ if (!isset($_GET["id"])) {
               </button>
             </div>
             <div class="modal-body">
-              <form action="makeSolution.php?id=<?php echo $id ?>" enctype='multipart/form-data' method="post">
+              <form action="makeSolution.php?id=<?php echo $tweetid ?>" enctype='multipart/form-data' method="post">
                   <div class="form-group">
                       <textarea name="tweetMaker" class="form-control" required="required"></textarea>
                   </div>
@@ -97,10 +97,9 @@ if (!isset($_GET["id"])) {
     } else {
         while ($row = $result->fetch_assoc()) {
             $text = preg_replace('/(?<!\S)#([0-9a-zA-Z]+)/', '<a href="hashtag.php?tag=$1">#$1</a>', $row["content"]);
-            $text = preg_replace('/(?<!\S)@([0-9a-zA-Z]+)/', '<a href="user.php?name=$1">@$1</a>', $text);
             echo "<div class='card text-primary bg-light mb-5' style='max-width: 18rem;'>";
-            $id = $row["id"];
-            echo "<div class='card-header'><form style='display: inline;' action='vote.php?reply=" . $id . "'method='POST'><button class='btn btn-secondary' type='submit'>";
+            $voteid = $row["id"];
+            echo "<div class='card-header'><form style='display: inline;' action='vote.php?reply=" . $voteid . "'method='POST'><button class='btn btn-secondary' type='submit'>";
             echo "<i class='fas fa-thumbs-up'></i></button></form><a class='text-primary' style='padding:10%' href='user.php?name=" . $row["username"] . "'>" . "@" . $row["username"] . "</a>";
             echo "<button type='button' class='btn btn-secondary' onclick='loadDynamicContent(" . $row["id"] . ")'><i class='fas fa-expand'></i></button>";
             echo "</div>";

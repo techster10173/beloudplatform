@@ -19,35 +19,58 @@
         ?>
     </a>
   <form class="form-inline">
+      <div class="btn-group">
           <?php
-          $_SESSION["dude"] = $_GET["name"];
+          $otherUser = $_GET["name"];
 
           $pql = "SELECT id FROM users WHERE username='" . $_GET["name"]."'";
           $besult=$conn->query($pql);
-          $temp;
+          $otherid;
 
           while($row = $besult->fetch_assoc()){
-              $temp = $row["id"];
+              $otherid = $row["id"];
           }
 
-          $id = $temp;
+          $id = $otherid;
           include "getFollowDetails.php";
+
           ?>
+        </div>
   </form>
-  <form action="follow.php" method="post">
+  <div class="row">
+        <div class="span6">
+  <form action="follow.php?userid=<?php echo $otherid ?>" method="post">
       <?php
       /*Prepared Statement*/
-            $sql = "SELECT followers.id FROM followers WHERE followers.followee=" . $temp . " AND followers.follower =" . $_SESSION["myID"];
+            $sql = "SELECT followers.id FROM followers WHERE followers.followee=" . $otherid . " AND followers.follower =" . $_SESSION["myID"];
             $result = $conn->query($sql);
             if($_SESSION["kyahaiuser"] != $_GET["name"]){
             if(mysqli_num_rows($result) == 0){
                 echo "<button type='submit' class='btn btn-primary'><i class='fas fa-user-plus'></i></button>";
             }else{
-                echo "<button type='submit' formaction='unfollow.php' class='btn btn-primary'><i class='fas fa-user-minus'></i></button>";
+                echo "<button type='submit' formaction='unfollow.php?userid=" . $otherid . "' class='btn btn-primary'><i class='fas fa-user-minus'></i></button>";
             }
         }
       ?>
   </form>
+</div>
+  <div class="span6">
+  <form action="block.php?userid=<?php echo $otherid ?>" method="post">
+      <?php
+      /*Prepared Statement*/
+            $sql = "SELECT block.id FROM block WHERE block.blockee=" . $otherid . " AND block.blocker =" . $_SESSION["myID"];
+            $result = $conn->query($sql);
+            if($_SESSION["kyahaiuser"] != $_GET["name"]){
+            if(mysqli_num_rows($result) == 0){
+                echo "<button type='submit' class='btn btn-primary'><i class='fas fa-exclamation-circle'></i></button>";
+            }else{
+                echo "<button type='submit' formaction='unblock.php?userid=" . $otherid . "' class='btn btn-primary'><i class='fas fa-check'></i></button>";
+            }
+        }
+      ?>
+  </form>
+</div>
+</div>
 </nav>
 <div class="container-fluid" style="padding:2%; text-align: center">
 <div class="card-columns">

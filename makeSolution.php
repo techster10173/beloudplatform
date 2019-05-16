@@ -6,6 +6,8 @@ include "credentials.php";
 $content = $_POST["tweetMaker"];
 $tweetId = $_GET["id"];
 
+echo $tweetId;
+
 $stmt = $conn->prepare("INSERT INTO replies (content,userid,tweetid) VALUES (?,?,?)");
 $stmt->bind_param("sii", $content, $_SESSION["myID"], $tweetId);
 $stmt->execute();
@@ -21,7 +23,6 @@ if(isset($_POST['btnSubmit']))
             $temp = $_FILES["files"]["tmp_name"][$i];
             $name = $_FILES["files"]["name"][$i];
             $type = $_FILES['files']['type'][$i];
-            echo $type;
 
             if(empty($temp))
             {
@@ -41,5 +42,5 @@ if(isset($_POST['btnSubmit']))
         }
     }
 }
-// header('Location: ' . $_SERVER['HTTP_REFERER']);
+header('Location: ' . $_SERVER['HTTP_REFERER']);
 ?>

@@ -69,7 +69,6 @@ include 'credentials.php';
   	while($r = $result->fetch_assoc()){
    ?>
     <tr>
-      <th scope="row"><?php echo $r['id'] ?></th>
       <td><?php echo $r['name'] ?></td>
       <td><a href="<?php echo $r['name'] ?>">View</a></td>
     </tr>
@@ -96,7 +95,7 @@ include 'credentials.php';
     }else{
     while($row = $result->fetch_assoc()){
             $text = preg_replace('/(?<!\S)#([0-9a-zA-Z]+)/', '<a href="hashtag.php?tag=$1">#$1</a>', $row["content"]);
-            $text = preg_replace('/(?<!\S)@([0-9a-zA-Z]+)/', '<a href="user.php?name=$1">@$1</a>', $text);
+            // $text = preg_replace('/(?<!\S)@([0-9a-zA-Z]+)/', '<a href="user.php?name=$1">@$1</a>', $text);
             echo "<div class='card text-primary bg-light mb-5' style='max-width: 18rem;'>";
             $id = $row["id"];
             echo "<div class='card-header'>";
