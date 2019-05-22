@@ -5,7 +5,6 @@
     }
 
     include 'credentials.php';
-
 ?>
 <head>
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
@@ -83,7 +82,6 @@ $result = $sql->get_result();
 date_default_timezone_set('UTC');
 while ($row = $result->fetch_assoc()) {
     $text = preg_replace('/(?<!\S)#([0-9a-zA-Z]+)/', '<a href="hashtag.php?tag=$1">#$1</a>', $row["content"]);
-    // $text = preg_replace('/(?<!\S)@([0-9a-zA-Z]+)/', '<a href="user.php?name=$1">@$1</a>', $text);
     echo "<div class='card text-primary bg-light mb-5' style='max-width: 18rem;'>";
     echo "<div class='card-header'><a class='text-primary' href='user.php?name=" . $row["username"] . "'>" . "@" . $row["username"] . "</a></div>";
     echo "<div class='card-body'>";

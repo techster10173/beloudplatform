@@ -82,6 +82,10 @@ $stmt->execute();
 $result = $stmt->get_result();
 
 date_default_timezone_set('UTC');
+
+if(mysqli_num_rows($result) == 0){
+    echo "</div><h1 class='display-4'>No Comments Yet!</h1>";
+}else{
 while($row = $result->fetch_assoc()){
     $text = preg_replace('/(?<!\S)#([0-9a-zA-Z]+)/', '<a href="hashtag.php?tag=$1">#$1</a>', $row["content"]);
     echo "<div class='card text-white bg-primary mb-5' style='max-width: 18rem;'>";
@@ -90,6 +94,7 @@ while($row = $result->fetch_assoc()){
     echo "<h5 class='card-title'>" . $text . "</h5>";
     echo "<p>" . date($row["timer"]) . "</p>";
     echo "</div></div>";
+}
 }
 ?>
 </div>
