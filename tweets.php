@@ -9,7 +9,7 @@
 <?php
 session_start();
 if ($_SESSION["kyahaiuser"] == "") {
-    header("Location:landing.html");
+    header("Location:index.html");
 }
 include 'credentials.php';
 

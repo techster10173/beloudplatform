@@ -22,7 +22,7 @@ $password = $_POST["passwo"];
             $_SESSION["kyahaiuser"] = $username;
             $_SESSION["myID"] = $row;
         }else{
-            echo "<script type='text/javascript'>alert('Oops your username or password might be wrong...Try Again?');window.location='landing.html';</script>";
+            echo "<script type='text/javascript'>alert('Oops your username or password might be wrong...Try Again?');window.location='index.html';</script>";
         }
 
  ?>

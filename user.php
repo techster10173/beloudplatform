@@ -13,7 +13,7 @@
 
         session_start();
         if($_SESSION["kyahaiuser"] == ""){
-            header("Location:landing.html");
+            header("Location:index.html");
         }
         echo "@" . $_GET["name"];
         ?>
